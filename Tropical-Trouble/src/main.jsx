@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import './index.css'
+// import './PixelGame.css'
 import PixelGame from './PixelGame.jsx'
 
 createRoot(document.getElementById('root')).render(

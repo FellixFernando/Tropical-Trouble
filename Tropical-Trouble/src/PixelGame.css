@@ -54,10 +54,10 @@ body {
 /* Map styling */
 .map {
     image-rendering: pixelated;
-    background-image: url("https://assets.codepen.io/21542/CameraDemoMap.png");
+    background-image: url("./map\ pantai.png");
     background-size: 100%;
-    width: calc(13 * var(--grid-cell)); /* 13 grid cells */
-    height: calc(10 * var(--grid-cell)); /* 10 grid cells */
+    width: calc(16 * var(--grid-cell)); /* 13 grid cells */
+    height: calc(16 * var(--grid-cell)); /* 10 grid cells */
     position: absolute;
     transform: translate3d(0, 0, 0); /* Default transform */
 }
