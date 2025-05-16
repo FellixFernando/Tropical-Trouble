@@ -80,9 +80,9 @@ export default function PixelGame() {
                 }
 
                 const leftLimit = -8;
-                const rightLimit = (16 * 11) + 8;
-                const topLimit = -8 + 32;
-                const bottomLimit = (16 * 7);
+                const rightLimit = (16 * 15)+4;
+                const topLimit = -4;
+                const bottomLimit = (16 * 15);
 
                 x = Math.max(leftLimit, Math.min(rightLimit, x));
                 y = Math.max(topLimit, Math.min(bottomLimit, y));

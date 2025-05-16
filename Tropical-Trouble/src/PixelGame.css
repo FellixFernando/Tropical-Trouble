@@ -54,7 +54,7 @@ body {
 /* Map styling */
 .map {
     image-rendering: pixelated;
-    background-image: url("./map\ pantai.png");
+    background: url("./assets/map/map-image/mapPantai.png");
     background-size: 100%;
     width: calc(16 * var(--grid-cell)); /* 16 grid cells */
     height: calc(16 * var(--grid-cell)); /* 16 grid cells */
@@ -64,8 +64,8 @@ body {
 
 /* Character styling */
 .character {
-    width: calc(var(--grid-cell) * 2);
-    height: calc(var(--grid-cell) * 2);
+    width: calc(var(--grid-cell) * 1.2);
+    height: calc(var(--grid-cell) * 1.2);
     position: absolute;
     overflow: hidden;
 }
@@ -85,7 +85,7 @@ body {
 /* Character spritesheet */
 .character_spritesheet {
     position: absolute;
-    background: url("https://assets.codepen.io/21542/DemoRpgCharacter.png") no-repeat;
+    background: url("./assets/boy.jpg") no-repeat;
     background-size: 100%;
     width: calc(var(--grid-cell) * 8); /* 8 frames in the spritesheet */
     height: calc(var(--grid-cell) * 8); /* 8 frames in the spritesheet */
@@ -94,19 +94,19 @@ body {
 
 /* Character facing directions */
 .character[facing="right"] .character_spritesheet {
-    background-position-y: calc(var(--pixel-size) * -32);
+    background-position-y: calc(var(--pixel-size) * -46);
 }
 
 .character[facing="up"] .character_spritesheet {
-    background-position-y: calc(var(--pixel-size) * -64);
+    background-position-y: calc(var(--pixel-size) * -68);
 }
 
 .character[facing="left"] .character_spritesheet {
-    background-position-y: calc(var(--pixel-size) * -96);
+    background-position-y: calc(var(--pixel-size) * -22);
 }
 
 .character[facing="down"] .character_spritesheet {
-    background-position-y: 0;
+    background-position-y: -2;
 }
 
 /* Walking animation */
