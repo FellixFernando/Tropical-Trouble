@@ -56,8 +56,8 @@ body {
     image-rendering: pixelated;
     background-image: url("./map\ pantai.png");
     background-size: 100%;
-    width: calc(16 * var(--grid-cell)); /* 13 grid cells */
-    height: calc(16 * var(--grid-cell)); /* 10 grid cells */
+    width: calc(16 * var(--grid-cell)); /* 16 grid cells */
+    height: calc(16 * var(--grid-cell)); /* 16 grid cells */
     position: absolute;
     transform: translate3d(0, 0, 0); /* Default transform */
 }

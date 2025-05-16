@@ -1,0 +1,1 @@
+// tempat nimpak2 screennya jika dia pindah world
