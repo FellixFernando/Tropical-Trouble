@@ -1,12 +1,12 @@
-/* Root variables for pixel size and grid */
-:root {
+//Root variables for pixel size and grid
+/* :root {
 	--pixel-size: 2px;
-	--grid-cell: 32px;
+	--grid-cell: calc(var(--pixel-size) * 16);
 	--bg: #bc4dff;
 }
 
 /* Responsive pixel size for larger screens */
-@media (min-width: 700px) {
+/* @media (min-width: 700px) {
 	:root {
 		--pixel-size: 3px;
 	}
@@ -19,7 +19,7 @@
 }
 
 /* Full height for the body and center alignment */
-html,
+/* html,
 body {
 	height: 100%;
 	overflow: hidden;
@@ -34,55 +34,55 @@ body {
 }
 
 /* Frame for the game */
-.frame {
-	width: calc(var(--pixel-size) * 180);
-	height: calc(var(--pixel-size) * 144);
-	outline: var(--pixel-size) solid #fff;
-	position: relative;
-	z-index: 1;
+/*.frame {
+    width: calc(var(--pixel-size) * 180);
+    height: calc(var(--pixel-size) * 144);
+    outline: var(--pixel-size) solid #fff;
+    position: relative;
+    z-index: 1;
 }
 
 /* Game screen container */
-.game-screen {
-	width: calc(var(--pixel-size) * 160);
-	height: calc(var(--pixel-size) * 144);
-	overflow: hidden;
-	background: #61ddf7;
-	position: relative;
+/*.game-screen {
+    width: calc(var(--pixel-size) * 160);
+    height: calc(var(--pixel-size) * 144);
+    overflow: hidden;
+    background: #61ddf7;
+    position: relative;
 }
 
 /* Root variables for pixel size and grid */
-:root {
-	--pixel-size: 2px;
-	--grid-cell: calc(var(--pixel-size) * 16);
-	--bg: #bc4dff;
+/*:root {
+    --pixel-size: 2px;
+    --grid-cell: calc(var(--pixel-size) * 16);
+    --bg: #bc4dff;
 }
 
 /* Responsive pixel size for larger screens */
-@media (min-width: 700px) {
-	:root {
-		--pixel-size: 3px;
-	}
+/*@media (min-width: 700px) {
+    :root {
+        --pixel-size: 3px;
+    }
 }
 
 @media (min-width: 1000px) {
-	:root {
-		--pixel-size: 4px;
-	}
+    :root {
+        --pixel-size: 4px;
+    }
 }
 
 /* Full height for the body and center alignment */
-html,
+/*html,
 body {
-	height: 100%;
-	overflow: hidden;
+    height: 100%;
+    overflow: hidden;
 }
 
 body {
-	background: var(--bg);
-	display: flex;
-	align-items: center;
-	justify-content: center;
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .pixel-art {
@@ -90,12 +90,11 @@ body {
 }
 
 .frame {
-	/* This is just for Pen decoration */
-	width: calc(var(--pixel-size) * 200);
-	height: calc(var(--pixel-size) * 160);
-	outline: var(--pixel-size) solid #fff;
-	z-index: 1;
-	position: relative;
+    width: calc(var(--pixel-size) * 200);
+    height: calc(var(--pixel-size) * 160);
+    outline: var(--pixel-size) solid #fff;
+    z-index: 1;
+    position: relative;
 }
 
 .game-screen {
@@ -107,22 +106,22 @@ body {
 }
 
 .map {
-	image-rendering: pixelated;
-	background-image: url("./assets/map/map-image/81ABA888-252A-4431-A59F-0A661428DF9E-export.png");
-	/* background-size: 100%; */
-	background-size: 100%;
-	width: calc(20 * var(--grid-cell));
-	height: calc(20 * var(--grid-cell));
-	/* width: 640px;
+    image-rendering: pixelated;
+    background-image: url("./assets/map/map-image/mapPantai.png");
+    /* background-size: 100%; */
+    /*background-size: 100%;
+    width: calc(20 * var(--grid-cell));
+    height: calc(20 * var(--grid-cell));
+    /* width: 640px;
     height: 640px; */
-	position: relative;
+    /*position: relative;
 }
 
 .character {
-	width: calc(var(--grid-cell) * 2);
-	height: calc(var(--grid-cell) * 1.8);
-	position: absolute;
-	overflow: hidden;
+    width: calc(var(--grid-cell)* 2);
+    height: calc(var(--grid-cell)* 1.8);
+    position: absolute;
+    overflow: hidden;
 }
 
 /* .shadow {
@@ -137,20 +136,21 @@ body {
             background-size: 100%;
         } */
 
-.character_spritesheet {
-	position: absolute;
-	background: url("./assets/image/ucup2.png") no-repeat no-repeat;
-	background-size: 100%;
-	width: calc(var(--grid-cell) * 8);
-	height: calc(var(--grid-cell) * 8);
+/*.character_spritesheet {
+    position: absolute;
+    background: url("./assets/image/ucup2.png") no-repeat no-repeat;
+    background-size: 100%;
+    width: calc(var(--grid-cell)* 8);
+    height: calc(var(--grid-cell)* 8);
 }
 
+
 .character[facing="right"] .character_spritesheet {
-	background-position-y: calc(var(--pixel-size) * -72);
+    background-position-y: calc(var(--pixel-size) * -72);
 }
 
 .character[facing="up"] .character_spritesheet {
-	background-position-y: calc(var(--pixel-size) * -102);
+    background-position-y: calc(var(--pixel-size) * -102 );
 }
 
 .character[facing="left"] .character_spritesheet {
@@ -169,4 +169,4 @@ body {
 	to {
 		transform: translate3d(-100%, 0%, 0);
 	}
-}
+} */
