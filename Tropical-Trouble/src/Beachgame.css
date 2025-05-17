@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 :root {
     --pixel-size: 3px;
     --grid-cell: calc(var(--pixel-size) * 16);
@@ -14,10 +15,53 @@
     height: calc(20 * var(--grid-cell));
     /* width: 640px;
     height: 640px; */
+=======
+//Root variables for pixel size and grid
+/* :root {
+	--pixel-size: 2px;
+	--grid-cell: calc(var(--pixel-size) * 16);
+	--bg: #bc4dff;
+}
+
+/* Responsive pixel size for larger screens */
+/* @media (min-width: 700px) {
+	:root {
+		--pixel-size: 3px;
+	}
+}
+
+@media (min-width: 1000px) {
+	:root {
+		--pixel-size: 4px;
+	}
+}
+
+/* Full height for the body and center alignment */
+/* html,
+body {
+	height: 100%;
+	overflow: hidden;
+	margin: 0;
+}
+
+body {
+	background: var(--bg);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* Frame for the game */
+/*.frame {
+    width: calc(var(--pixel-size) * 180);
+    height: calc(var(--pixel-size) * 144);
+    outline: var(--pixel-size) solid #fff;
+>>>>>>> e1f26e299ecc82b14568d53aacf84ee952113370
     position: relative;
     z-index: 1;
 }
 
+<<<<<<< HEAD
 /* .active-map {
     z-index: 2;
     position: absolute;
@@ -36,6 +80,82 @@
     opacity: 0;
     transition: opacity 0.2s;
 } */
+=======
+/* Game screen container */
+/*.game-screen {
+    width: calc(var(--pixel-size) * 160);
+    height: calc(var(--pixel-size) * 144);
+    overflow: hidden;
+    background: #61ddf7;
+    position: relative;
+}
+
+/* Root variables for pixel size and grid */
+/*:root {
+    --pixel-size: 2px;
+    --grid-cell: calc(var(--pixel-size) * 16);
+    --bg: #bc4dff;
+}
+
+/* Responsive pixel size for larger screens */
+/*@media (min-width: 700px) {
+    :root {
+        --pixel-size: 3px;
+    }
+}
+
+@media (min-width: 1000px) {
+    :root {
+        --pixel-size: 4px;
+    }
+}
+
+/* Full height for the body and center alignment */
+/*html,
+body {
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pixel-art {
+	image-rendering: pixelated;
+}
+
+.frame {
+    width: calc(var(--pixel-size) * 200);
+    height: calc(var(--pixel-size) * 160);
+    outline: var(--pixel-size) solid #fff;
+    z-index: 1;
+    position: relative;
+}
+
+.game-screen {
+	width: calc(var(--pixel-size) * 200);
+	height: calc(var(--pixel-size) * 160);
+	overflow: hidden;
+	background: #61ddf7;
+	position: relative;
+}
+
+.map {
+    image-rendering: pixelated;
+    background-image: url("./assets/map/map-image/mapPantai.png");
+    /* background-size: 100%; */
+    /*background-size: 100%;
+    width: calc(20 * var(--grid-cell));
+    height: calc(20 * var(--grid-cell));
+    /* width: 640px;
+    height: 640px; */
+    /*position: relative;
+}
+>>>>>>> e1f26e299ecc82b14568d53aacf84ee952113370
 
 .character {
     width: calc(var(--grid-cell)* 2);
@@ -48,15 +168,28 @@
             width: calc(var(--grid-cell)* 1.2);
             height: calc(var(--grid-cell)* 1.2);
             position: absolute;
+<<<<<<< HEAD
             left: 0;
             top: 0;
+=======
+            left: calc(var(--grid-cell)* 0.4);
+            bottom: calc(var(--grid-cell)* 0.4);
+            top: calc(var(--grid-cell)* 0);
+            right: calc(var(--grid-cell)* 0);
+>>>>>>> e1f26e299ecc82b14568d53aacf84ee952113370
             background: url("https://assets.codepen.io/21542/DemoRpgCharacterShadow.png") no-repeat no-repeat;
             background-size: 100%;
         } */
 
+<<<<<<< HEAD
 .character_spritesheet {
     position: absolute;
     background: url("./assets/image/WhatsApp_图像2025-05-16于13.50.34_5e5ba81a-removebg-preview.png") no-repeat no-repeat;
+=======
+/*.character_spritesheet {
+    position: absolute;
+    background: url("./assets/image/ucup2.png") no-repeat no-repeat;
+>>>>>>> e1f26e299ecc82b14568d53aacf84ee952113370
     background-size: 100%;
     width: calc(var(--grid-cell)* 8);
     height: calc(var(--grid-cell)* 8);
@@ -72,6 +205,7 @@
 }
 
 .character[facing="left"] .character_spritesheet {
+<<<<<<< HEAD
     background-position-y: calc(var(--pixel-size) * -40);
 }
 
@@ -88,3 +222,21 @@
         transform: translate3d(-100%, 0%, 0);
     }
 }
+=======
+	background-position-y: calc(var(--pixel-size) * -40);
+}
+
+.character[walking="true"] .character_spritesheet {
+	animation: walkAnimation 0.6s steps(4) infinite;
+}
+
+@keyframes walkAnimation {
+	from {
+		transform: translate3d(0%, 0%, 0);
+	}
+
+	to {
+		transform: translate3d(-100%, 0%, 0);
+	}
+} */
+>>>>>>> e1f26e299ecc82b14568d53aacf84ee952113370

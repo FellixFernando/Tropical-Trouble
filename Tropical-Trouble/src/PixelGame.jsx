@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import City from './game-screen/game-map/city';
 import Beach from './game-screen/game-map/beach'; 
@@ -29,16 +30,3 @@ export default function PixelGame() {
 }
 
 
-// import { useState } from "react";
-// import Forest from './game-screen/game-map/forest'
-// import "./pixelgame.css";
-
-// export default function PixelGame() {
-//     return (
-//         <div className="frame">
-//             <div className="game-screen">
-//                 <Forest/>
-//             </div>
-//         </div>
-//     )
-// }
