@@ -7,7 +7,7 @@
 
 .map {
     image-rendering: pixelated;
-    /* background-image: url("./assets/map/map-image/mapCity.png"); */
+    /* background-image: url("./assets/map/map-image/mapPantai.png"); */
     background-size: 100%;
     background-size: 100%;
     width: calc(20 * var(--grid-cell));
@@ -15,7 +15,7 @@
     /* width: 640px;
     height: 640px; */
     position: relative;
-    z-index: 2;
+    z-index: 1;
 }
 
 /* .active-map {

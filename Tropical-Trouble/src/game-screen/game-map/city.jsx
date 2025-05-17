@@ -1,33 +1,64 @@
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import collision from '../../assets/map/map-collision/map-city';
+import cityMape from '../../assets/map/map-image/mapCity.png'
 import '../../Citygame.css';
 
-const MAP_WIDTH = 20; // Width of map in grid cells
+const MAP_WIDTH = 20;
+const MAP_HEIGHT = 20;
 
+// Function to check collision
 function isCollision(x, y) {
-    // const gridCell = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--grid-cell')) || 32;
     const gridX = Math.floor(x / 16);
     const gridY = Math.floor(y / 16);
 
-    if (gridX < 0 || gridX >= MAP_WIDTH || gridY < 0 || gridY >= 20) {
-        return true; // Out of bounds = collision
+    if (gridX < 0 || gridX >= MAP_WIDTH || gridY < 0 || gridY >= MAP_HEIGHT) {
+        return true;
     }
 
-    const collisionValue = collision[gridY * MAP_WIDTH + gridX];
-    return collisionValue !== 0; // selain 0 adalah collision
+    const collisionIndex = gridY * MAP_WIDTH + gridX;
+    if (collisionIndex < 0 || collisionIndex >= collision.length) {
+        return true;
+    }
+    const collisionValue = collision[collisionIndex];
+    return collisionValue !== 0 && collisionValue !== -1;
 }
 
-export default function PixelGame() {
+// Function to check if position is a portal (-1 in array)
+function checkPortalDestination(x, y) {
+    const gridX = Math.floor(x / 16);
+    const gridY = Math.floor(y / 16);
+
+    if (gridX < 0 || gridX >= MAP_WIDTH || gridY < 0 || gridY >= MAP_HEIGHT) {
+        return null;
+    }
+
+    const collisionIndex = gridY * MAP_WIDTH + gridX;
+
+  
+    if (gridY === 17 && collision[collisionIndex] === -1) {
+        if (gridX === 0) { 
+            return 'beach';
+        } else if (gridX === 19) { 
+            return 'forest';
+        }
+    }
+
+    return null;
+}
+
+export default function City({ onChangeWorld, startPosition }) {
+    console.log('city');
+
     const characterRef = useRef(null);
     const mapRef = useRef(null);
     const [gameState, setGameState] = useState({
-        x: 6 * 32,
-        y: 8 * 32,
+        x: startPosition?.x || 6 * 32,
+        y: startPosition?.y || 8 * 32,
         pressedDirections: [],
         facing: "down",
         walking: false,
-        cameraX: 6 * 32,
-        cameraY: 8 * 32,
+        cameraX: startPosition?.x || 6 * 32,
+        cameraY: startPosition?.y || 8 * 32,
     });
 
     const directions = useMemo(() => ({
@@ -44,7 +75,7 @@ export default function PixelGame() {
         'ArrowDown': directions.down,
     }), [directions]);
 
-    const speed = 1; // Speed of character movement
+    const speed = 1;
 
     const handleKeyDown = useCallback((e) => {
         const dir = keys[e.code];
@@ -89,19 +120,32 @@ export default function PixelGame() {
                     let nextX = x;
                     let nextY = y;
 
-                    // Calculate next position based on direction
                     if (direction === directions.right) nextX += speed;
                     if (direction === directions.left) nextX -= speed;
                     if (direction === directions.down) nextY += speed;
                     if (direction === directions.up) nextY -= speed;
 
-                    // Check for collision before moving
-                    // We need to check for collision at character's feet (bottom center point)
-                    const characterWidth = 32; // Assuming character width is 16px (1 grid cell)
-                    const characterHeight = 20; // Assuming character height is 16px (1 grid cell)
+                    const characterWidth = 32;
+                    const characterHeight = 20;
 
                     const feetX = nextX + (characterWidth / 2);
                     const feetY = nextY + characterHeight;
+
+                    // Check if player is at the specific portal (row 18, column 20)
+                    const portalDestination = checkPortalDestination(feetX, feetY);
+                    if (portalDestination) {
+                        if (onChangeWorld) {
+                            // Send current position and destination
+                            onChangeWorld(portalDestination, nextX, nextY);
+                        }
+                        return {
+                            ...prev,
+                            x: nextX,
+                            y: nextY,
+                            walking: true,
+                            facing: direction,
+                        };
+                    }
 
                     if (!isCollision(feetX, feetY)) {
                         x = nextX;
@@ -156,17 +200,17 @@ export default function PixelGame() {
             window.removeEventListener('keyup', handleKeyUp);
             cancelAnimationFrame(animationFrameId);
         };
-    }, [directions, handleKeyDown, handleKeyUp]);
+    }, [directions, handleKeyDown, handleKeyUp, onChangeWorld]);
 
     useEffect(() => {
         if (!characterRef.current || !mapRef.current) return;
 
         const pixelSize = parseInt(
-            getComputedStyle(document.documentElement).getPropertyValue('--pixel-size') || '2'
+            getComputedStyle(document.documentElement).getPropertyValue('--pixel-size') || '3'
         );
 
-        const CAMERA_LEFT_OFFSET_PX = 66;
-        const CAMERA_TOP_OFFSET_PX = 42;
+        const CAMERA_LEFT_OFFSET_PX = 206;
+        const CAMERA_TOP_OFFSET_PX = 102;
 
         const cameraTransformLeft = -gameState.cameraX * pixelSize + (pixelSize * CAMERA_LEFT_OFFSET_PX);
         const cameraTransformTop = -gameState.cameraY * pixelSize + (pixelSize * CAMERA_TOP_OFFSET_PX);
@@ -177,81 +221,78 @@ export default function PixelGame() {
         characterRef.current.setAttribute('walking', gameState.walking ? 'true' : 'false');
     }, [gameState]);
 
-
-    // function renderGridCells() {
-    //     const gridCell = 64;
-    //     const cells = [];
-    //     for (let y = 0; y < 20; y++) {
-    //         for (let x = 0; x < 20; x++) {
-    //             cells.push(
-    //                 <div
-    //                     key={`grid-${x}-${y}`}
-    //                     style={{
-    //                         position: 'absolute',
-    //                         left: x * gridCell,
-    //                         top: y * gridCell,
-    //                         width: gridCell,
-    //                         height: gridCell,
-    //                         border: '1px solid white',
-    //                         boxSizing: 'border-box',
-    //                         pointerEvents: 'none',
-    //                         zIndex: 20,
-    //                         opacity: 0.5,
-    //                         fontSize: 10,
-    //                         color: 'yellow',
-    //                         display: 'flex',
-    //                         alignItems: 'flex-start',
-    //                         justifyContent: 'flex-start',
-    //                         padding: 2,
-    //                         background: 'transparent',
-    //                     }}
-    //                 >
-    //                     {y+1},{x+1}
-    //                 </div>
-    //             );
-    //         }
-    //     }
-    //     return cells;
-    // }
+    function renderGridCells() {
+        const gridCell = 48;
+        const cells = [];
+        for (let y = 0; y < 20; y++) {
+            for (let x = 0; x < 20; x++) {
+                cells.push(
+                    <div
+                        key={`grid-${x}-${y}`}
+                        style={{
+                            position: 'absolute',
+                            left: x * gridCell,
+                            top: y * gridCell,
+                            width: gridCell,
+                            height: gridCell,
+                            border: '1px solid white',
+                            boxSizing: 'border-box',
+                            pointerEvents: 'none',
+                            zIndex: 20,
+                            opacity: 0.5,
+                            fontSize: 10,
+                            color: 'yellow',
+                            display: 'flex',
+                            alignItems: 'flex-start',
+                            justifyContent: 'flex-start',
+                            padding: 2,
+                            background: 'transparent',
+                        }}
+                    >
+                        {y + 1},{x + 1}
+                    </div>
+                );
+            }
+        }
+        return cells;
+    }
 
     return (
-        <div className="frame">
-            <div className="game-screen">
-                <div ref={mapRef} className="map">
-                    {/* {collision.map((val, idx) => {
-                        if (val === 0) return null;
-                        const gridCell = 64;
-                        const x = (idx % MAP_WIDTH) * gridCell;
-                        const y = Math.floor(idx / MAP_WIDTH) * gridCell;
-                        return (
-                            <div
-                                key={idx}
-                                style={{
-                                    position: 'absolute',
-                                    left: x,
-                                    top: y,
-                                    width: gridCell,
-                                    height: gridCell,
-                                    background: 'rgba(255,0,0,0.5)',
-                                    border: '1px solid red',
-                                    boxSizing: 'border-box',
-                                    pointerEvents: 'none',
-                                    zIndex: 10,
-                                }}
-                            />
-                        );
-                    })} */}
-                    {/* Grid overlay */}
-                    {/* {renderGridCells()} */}
-                    <div
-                        ref={characterRef}
-                        className="character"
-                        facing="down"
-                        walking="true"
-                    >
-                        <div className="shadow pixel-art"></div>
-                        <div className="character_spritesheet"></div>
-                    </div>
+        <div className="game-screen">
+            <div ref={mapRef} className="map" style={{ backgroundImage: `url(${cityMape})` }}>
+                {collision.map((val, idx) => {
+                    if (val === 0) return null;
+                    const gridCell = 48;
+                    const x = (idx % MAP_WIDTH) * gridCell;
+                    const y = Math.floor(idx / MAP_WIDTH) * gridCell;
+                    return (
+                        <div
+                            key={idx}
+                            style={{
+                                position: 'absolute',
+                                left: x,
+                                top: y,
+                                width: gridCell,
+                                height: gridCell,
+                                background: val === -1 ? 'rgba(0,255,0,0.5)' : 'rgba(255,0,0,0.5)',
+                                border: val === -1 ? '1px solid green' : '1px solid red',
+                                boxSizing: 'border-box',
+                                pointerEvents: 'none',
+                                zIndex: 10,
+                            }}
+                        />
+                    );
+                })}
+                {/* Grid overlay */}
+                {renderGridCells()}
+                <div
+                    ref={characterRef}
+                    className="character"
+                    facing="down"
+                    walking="true"
+                >
+                    <div className="shadow pixel-art"></div>
+                    <div className="character_spritesheet"></div>
                 </div>
             </div>
         </div>
