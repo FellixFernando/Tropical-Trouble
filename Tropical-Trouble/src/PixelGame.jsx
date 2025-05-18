@@ -3,6 +3,8 @@ import { useState } from 'react';
 import City from './game-screen/game-map/city';
 import Beach from './game-screen/game-map/beach'; 
 import Forest from './game-screen/game-map/forest'; 
+// import CityTown from "./game-screen/game-map/cityTown";
+// import CityNight from "./game-screen/game-map/cityNight";
 import './pixelgame.css';
 
 export default function PixelGame() {
@@ -30,3 +32,16 @@ export default function PixelGame() {
 }
 
 
+// import { useState } from "react";
+// // import CityTown from "./game-screen/game-map/cityTown";
+// import CityNight from "./game-screen/game-map/cityNight";
+
+// export default function PixelGame() {
+//     return (
+//         <div className="frame">
+//             <div className="game-screen">
+//                 <CityNight />
+//             </div>
+//         </div>
+//     )
+// }

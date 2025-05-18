@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import collision from '../../assets/map/map-collision/map-forest';
 import forestMape from '../../assets/map/map-image/mapHutan.png';
-import '../../Forestgame.css';
+import '../../Citygame.css';
 
 const MAP_WIDTH = 20;
 const MAP_HEIGHT = 20;

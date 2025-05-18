@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import collision from '../../assets/map/map-collision/map-pantai';
 import beachMape from '../../assets/map/map-image/mapPantai.png';
-import '../../Beachgame.css';
+import '../../Citygame.css';
 
 const MAP_WIDTH = 20;
 const MAP_HEIGHT = 20;
@@ -38,13 +38,13 @@ export default function Beach({ onChangeWorld, startPosition }) {
     const characterRef = useRef(null);
     const mapRef = useRef(null);
     const [gameState, setGameState] = useState({
-        x: startPosition?.x || 5 * 32,
-        y: startPosition?.y || 2 * 32,
+        x: startPosition?.x || 9.2 * 32,
+        y: startPosition?.y || 3.3 * 32,
         pressedDirections: [],
         facing: "down",
         walking: false,
-        cameraX: startPosition?.x || 3.8 * 32,
-        cameraY: startPosition?.y || 9.2 * 32,
+        cameraX: startPosition?.x || 9.2 * 32,
+        cameraY: startPosition?.y || 3.3 * 32,
     });
 
     const directions = useMemo(() => ({
