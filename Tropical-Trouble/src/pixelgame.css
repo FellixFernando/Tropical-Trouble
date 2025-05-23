@@ -1,5 +1,5 @@
 :root {
-    --pixel-size: 3px;
+    --pixel-size: 4px;
     --grid-cell: calc(var(--pixel-size) * 16);
     --bg: #bc4dff;
 }

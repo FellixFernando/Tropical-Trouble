@@ -3,6 +3,7 @@ import { useState } from 'react';
 import City from './game-screen/game-map/city';
 import Beach from './game-screen/game-map/beach'; 
 import Forest from './game-screen/game-map/forest'; 
+import Cblast from './game-screen/mini-game/color-blast'
 // import CityTown from "./game-screen/game-map/cityTown";
 // import CityNight from "./game-screen/game-map/cityNight";
 import './pixelgame.css';
@@ -26,6 +27,7 @@ export default function PixelGame() {
                 {currentWorld === 'city' && <City onChangeWorld={handleChangeWorld} />}
                 {currentWorld === 'beach' && <Beach onChangeWorld={handleChangeWorld}/>} 
                 {currentWorld === 'forest' && <Forest onChangeWorld={handleChangeWorld}/>}
+                {currentWorld === 'cblast' && <Cblast onChangeWorld={handleChangeWorld}/>}
             </div>
         </div>
     );

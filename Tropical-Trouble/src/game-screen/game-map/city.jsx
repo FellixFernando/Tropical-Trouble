@@ -219,7 +219,7 @@ export default function Beach({ onChangeWorld, startPosition }) {
 	}, [gameState]);
 
 	function renderGridCells() {
-		const gridCell = 48;
+		const gridCell = 64;
 		const cells = [];
 		for (let y = 0; y < 20; y++) {
 			for (let x = 0; x < 20; x++) {
@@ -261,7 +261,7 @@ export default function Beach({ onChangeWorld, startPosition }) {
 				{/* Display collision areas and portals */}
 				{collision.map((val, idx) => {
 					if (val === 0) return null;
-					const gridCell = 48;
+					const gridCell = 64;
 					const x = (idx % MAP_WIDTH) * gridCell;
 					const y = Math.floor(idx / MAP_WIDTH) * gridCell;
 					return (
