@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import collision from '../../assets/map/map-collision/map-city-town';
-import cityMape from '../../assets/map/map-image/mapTown.jpg';
+import cityMape from '../../assets/map/map-image/townAwal.png';
 import '../../Citygame.css';
 
 const MAP_WIDTH = 20;
@@ -29,14 +29,9 @@ function checkPortalDestination(x, y) {
 
 	const collisionIndex = gridY * MAP_WIDTH + gridX;
 
-	// Only check row 18 (index 17) for portals
-	if (gridY === 17 && collision[collisionIndex] === -1) {
-		if (gridX === 0) { // Left portal (first column)
-			return 'forest';
-		} else if (gridX === 19) { // Right portal (last column)
-			return 'beach';
-		}
-	}
+    if (gridY === 14 && (gridX === 11 || gridX === 12)) {
+        return 'kamar1';
+    }
 
 	return null;
 }

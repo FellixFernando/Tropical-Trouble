@@ -93,9 +93,32 @@
 .bullet {
     position: absolute;
     width: 8px;
-    height: 8px;
-    background-color: yellow;
-    border-radius: 50%;
+    height: 28px;
+    background-color: red;
+    /* border-radius: 50%; */
     transform-origin: center;
     z-index: 15;
+}
+
+
+/* Tambahkan ini di dalam file Citygame.css Anda */
+
+.explosion {
+    position: absolute;
+    width: 64px; /* Sesuaikan dengan ukuran satu frame ledakan Anda */
+    height: 64px; /* Sesuaikan dengan ukuran satu frame ledakan Anda */
+    background-image: url('./assets/map/map-image/explosion-sprite.png'); /* Ganti dengan path gambar Anda */
+    background-repeat: no-repeat;
+    animation: play-explosion 0.5s steps(8) forwards; /* 'steps(8)' berarti ada 8 frame di sprite sheet Anda */
+    z-index: 10;
+    transform-origin: center;
+}
+
+@keyframes play-explosion {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: -512px 0; /* 8 frame * 64px/frame = 512px */
+    }
 }

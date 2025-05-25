@@ -1,1 +1,0 @@
-// kode-kode yang mau di ubah taruh disini terlebih dahulu

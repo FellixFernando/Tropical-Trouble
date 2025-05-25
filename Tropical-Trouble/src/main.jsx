@@ -1,10 +1,10 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-// import './PixelGame.css'
-import PixelGame from './PixelGame.jsx'
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './PixelGame'
+import './pixelGame.css'
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <PixelGame />
-  </StrictMode>,
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
 )

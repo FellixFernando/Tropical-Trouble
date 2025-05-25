@@ -19,22 +19,30 @@ function isCollision(x, y) {
 }
 
 // Function to check if position is a portal back to city
-function isPortalToCity(x, y) {
+function checkPortalDestination(x, y) {
     const gridX = Math.floor(x / 16);
     const gridY = Math.floor(y / 16);
 
     if (gridX < 0 || gridX >= MAP_WIDTH || gridY < 0 || gridY >= MAP_HEIGHT) {
-        return false;
+        return null;
     }
 
-    const collisionIndex = gridY * MAP_WIDTH + gridX;
-    // Check if it's a portal value
-    return collision[collisionIndex] === -1;
+    // Baris ke-20 kolom ke-9 (ingat index 0)
+    if (gridY === 19 && gridX === 8) {
+        return 'city';
+    }
+
+    // Baris ke-6 kolom ke-3 atau ke-4
+    if (gridY === 5 && (gridX === 2 || gridX === 3)) {
+        return 'cblast';
+    }
+
+    return null;
 }
 
 export default function Beach({ onChangeWorld, startPosition }) {
     console.log('forest');
-    
+
     const characterRef = useRef(null);
     const mapRef = useRef(null);
     const [gameState, setGameState] = useState({
@@ -120,10 +128,10 @@ export default function Beach({ onChangeWorld, startPosition }) {
                     const feetY = nextY + characterHeight;
 
                     // Check if on portal to city
-                    if (isPortalToCity(feetX, feetY)) {
+                    const portalDestination = checkPortalDestination(feetX, feetY);
+                    if (portalDestination) {
                         if (onChangeWorld) {
-                            // Change world to city and send current position
-                            onChangeWorld('cblast', nextX, nextY);
+                            onChangeWorld(portalDestination, nextX, nextY);
                         }
                         return {
                             ...prev,
@@ -245,9 +253,9 @@ export default function Beach({ onChangeWorld, startPosition }) {
     }
     return (
         <div className="game-screen">
-            <div ref={mapRef} className="map"   style={{ backgroundImage: `url(${forestMape})` }}>
-                
-              
+            <div ref={mapRef} className="map" style={{ backgroundImage: `url(${forestMape})` }}>
+
+
                 {/* Display collision areas and portals */}
                 {collision.map((val, idx) => {
                     if (val === 0) return null;

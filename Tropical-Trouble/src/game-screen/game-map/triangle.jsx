@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
-import collision from '../../assets/map/map-collision/map-city';
-import cityMape from '../../assets/map/map-image/townDefault.png';
+import collision from '../../assets/map/map-collision/triangleK';
+import cityMape from '../../assets/map/map-image/triangleK.png';
 import '../../Citygame.css';
 
 const MAP_WIDTH = 20;
@@ -20,29 +20,21 @@ function isCollision(x, y) {
 
 // Function to check if position is a portal back to city
 function checkPortalDestination(x, y) {
-    const gridX = Math.floor(x / 16);
-    const gridY = Math.floor(y / 16);
+	const gridX = Math.floor(x / 16);
+	const gridY = Math.floor(y / 16);
 
-    if (gridX < 0 || gridX >= MAP_WIDTH || gridY < 0 || gridY >= MAP_HEIGHT) {
-        return null;
+	if (gridX < 0 || gridX >= MAP_WIDTH || gridY < 0 || gridY >= MAP_HEIGHT) {
+		return null;
+	}
+
+	const collisionIndex = gridY * MAP_WIDTH + gridX;
+
+	// Only check row 18 (index 17) for portals
+	if (gridY === 19 && (gridX === 9 || gridX === 10 || gridX === 11)) {
+        return 'city';
     }
 
-    const collisionIndex = gridY * MAP_WIDTH + gridX;
-
-	if (gridX === 1 && gridY === 10) {
-    return 'triangle';
-}
-
-    // Only check row 18 (index 17) for portals
-    if (gridY === 17 && collision[collisionIndex] === -1) {
-        if (gridX === 0) { // Left portal (first column)
-            return 'forest';
-        } else if (gridX === 19) { // Right portal (last column)
-            return 'beach';
-        }
-    }
-
-    return null;
+	return null;
 }
 
 export default function Beach({ onChangeWorld, startPosition }) {
@@ -51,8 +43,8 @@ export default function Beach({ onChangeWorld, startPosition }) {
 	const characterRef = useRef(null);
 	const mapRef = useRef(null);
 	const [gameState, setGameState] = useState({
-		x: startPosition?.x || 6 * 32,
-		y: startPosition?.y || 8 * 32,
+		x: startPosition?.x || 4.8 * 32,
+		y: startPosition?.y || 8.8 * 32,
 		pressedDirections: [],
 		facing: "down",
 		walking: false,

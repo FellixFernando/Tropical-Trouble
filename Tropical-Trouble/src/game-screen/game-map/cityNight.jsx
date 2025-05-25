@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import collision from '../../assets/map/map-collision/map-city-night';
-import cityMape from '../../assets/map/map-image/mapCityNight.png';
+import cityMape from '../../assets/map/map-image/townMalam.png';
 import '../../Citygame.css';
 
 const MAP_WIDTH = 20;

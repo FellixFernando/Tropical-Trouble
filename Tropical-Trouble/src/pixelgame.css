@@ -1,51 +1,50 @@
 :root {
-    --pixel-size: 4px;
-    --grid-cell: calc(var(--pixel-size) * 16);
-    --bg: #bc4dff;
+	--pixel-size: 4px;
+	--grid-cell: calc(var(--pixel-size) * 16);
+	--bg: #bc4dff;
 }
-
 
 html,
 body {
-    height: 100%;
-    overflow: hidden;
-    margin: 0;
+	height: 100%;
+	overflow: hidden;
+	margin: 0;
 }
 
 body {
-    background: var(--bg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+	background: var(--bg);
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 /* Frame for the game */
 .frame {
-    width: calc(var(--pixel-size) * 360);
-    height: calc(var(--pixel-size) * 204);
-    /* height: 100%;
+	width: calc(var(--pixel-size) * 360);
+	height: calc(var(--pixel-size) * 204);
+	/* height: 100%;
     width: 100%; */
-    outline: 5px solid #fff;
-    position: relative;
-    z-index: 1;
+	outline: 5px solid #fff;
+	position: relative;
+	z-index: 1;
 }
 
 /* Game screen container */
 .game-screen {
-    width: calc(var(--pixel-size) * 360);
-    height: calc(var(--pixel-size) * 204);
-    /* height: 100%;
+	width: calc(var(--pixel-size) * 360);
+	height: calc(var(--pixel-size) * 204);
+	/* height: 100%;
     width: 100%; */
-    overflow: hidden;
-    background: #61ddf7;
-    position: relative;
+	overflow: hidden;
+	background: #61ddf7;
+	position: relative;
 }
 
 /* Contoh aturan CSS LAMA yang mungkin pernah ada */
 .active-map {
-  display: block; /* atau flex, grid, dll. */
+	display: block; /* atau flex, grid, dll. */
 }
 
 .inactive-map {
-  display: none;
+	display: none;
 }

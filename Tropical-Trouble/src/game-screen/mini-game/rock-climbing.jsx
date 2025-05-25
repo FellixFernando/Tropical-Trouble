@@ -3,7 +3,7 @@ import "./ObstacleGame.css"; // Make sure the path is correct relative to this f
 
 // Define constants OUTSIDE the component function
 const playerVisualSize = 40;
-const obstacleVisualSize = 40;
+const obstacleVisualSize = 60; // Increased from 40 to 60 (1.5x bigger)
 const playerBottomOffsetPx = 40; // The 'bottom: 40px' from your CSS
 const GAME_DURATION = 60; // seconds
 
@@ -15,6 +15,8 @@ export default function ObstacleGame() {
 	const [playerPosition, setPlayerPosition] = useState(50); // Horizontal position %
 	const [obstacles, setObstacles] = useState([]); // [{ id, x: %, y: % }, ...]
 	const [backgroundPosition, setBackgroundPosition] = useState(0); // For background scroll effect
+	const [attemptsLeft, setAttemptsLeft] = useState(3); // Add attempts counter
+	const [highestScore, setHighestScore] = useState(0); // Add highest score tracking
 
 	const gameAreaRef = useRef(null); // Ref to the game area div
 	const requestRef = useRef(null); // Ref for requestAnimationFrame ID
@@ -26,6 +28,7 @@ export default function ObstacleGame() {
 		gameOver: false,
 		playerPosition: 50,
 		obstacles: [],
+		attemptsLeft: 3,
 	});
 
 	// Update the ref whenever state changes
@@ -36,12 +39,22 @@ export default function ObstacleGame() {
 			gameOver,
 			playerPosition,
 			obstacles,
+			attemptsLeft,
 		};
-	}, [gameStarted, gameOver, playerPosition, obstacles]);
+	}, [gameStarted, gameOver, playerPosition, obstacles, attemptsLeft]);
 
 	// Function to end the game
-	const endGame = useCallback((survived = false) => {
+	const endGame = useCallback((survived = false, finalScore = 0) => {
 		console.log(`Game ending. Survived: ${survived}`);
+
+		// Always update highest score to the latest value
+		setHighestScore((prev) => Math.max(prev, finalScore));
+
+		// Decrease attempts if not survived
+		if (!survived) {
+			setAttemptsLeft((prev) => prev - 1);
+		}
+
 		setGameOver(true);
 		setGameStarted(false);
 
@@ -87,7 +100,7 @@ export default function ObstacleGame() {
 			const updatedObstacles = obstacles
 				.map((obstacle) => ({
 					...obstacle,
-					y: obstacle.y + deltaTime * 0.05, // Move down based on deltaTime
+					y: obstacle.y + deltaTime * 0.15, // Move down based on deltaTime
 				}))
 				.filter((obstacle) => obstacle.y < 100); // Remove off-screen obstacles
 
@@ -102,7 +115,7 @@ export default function ObstacleGame() {
 			const playerTopPx = playerBottomPx - playerVisualSize;
 
 			// Player hitbox reduced by 20% for more forgiving collisions
-			const hitboxReduction = playerVisualSize * 0.2;
+			const hitboxReduction = playerVisualSize * 0.1;
 			const playerHitboxLeft = playerLeftPx + hitboxReduction;
 			const playerHitboxRight = playerRightPx - hitboxReduction;
 			const playerHitboxTop = playerTopPx + hitboxReduction;
@@ -115,7 +128,7 @@ export default function ObstacleGame() {
 				const obstacleTopPx = (obstacle.y / 100) * gameAreaDims.height;
 
 				// Obstacle hitbox reduced by 20% for more forgiving collisions
-				const obstacleHitboxReduction = obstacleVisualSize * 0.2;
+				const obstacleHitboxReduction = obstacleVisualSize * 0.1;
 				const obstacleHitboxLeft = obstacleLeftPx + obstacleHitboxReduction;
 				const obstacleHitboxRight =
 					obstacleLeftPx + obstacleVisualSize - obstacleHitboxReduction;
@@ -140,7 +153,7 @@ export default function ObstacleGame() {
 
 			// Update state only if needed
 			if (collisionDetected) {
-				endGame(false);
+				endGame(false, score);
 			} else {
 				setObstacles(updatedObstacles);
 			}
@@ -148,11 +161,14 @@ export default function ObstacleGame() {
 			// Continue the game loop
 			requestRef.current = requestAnimationFrame(gameLoop);
 		},
-		[endGame]
+		[endGame, score]
 	);
 
 	// Function to start the game
 	const startGame = () => {
+		// Don't start if no attempts left
+		if (attemptsLeft <= 0) return;
+
 		console.log("Starting game...");
 		setGameStarted(true);
 		setGameOver(false);
@@ -252,7 +268,7 @@ export default function ObstacleGame() {
 			setTimeLeft((prev) => {
 				if (prev <= 1) {
 					clearInterval(timerInterval);
-					endGame(true); // Player survived!
+					endGame(true, score + 1); // +1 because score is incremented after timer fires
 					return 0;
 				}
 
@@ -263,7 +279,7 @@ export default function ObstacleGame() {
 		}, 1000);
 
 		return () => clearInterval(timerInterval);
-	}, [gameStarted, gameOver, endGame]);
+	}, [gameStarted, gameOver, endGame, score]);
 
 	// Clean up all timers and animations on unmount
 	useEffect(() => {
@@ -278,6 +294,8 @@ export default function ObstacleGame() {
 			<div className="game-stats">
 				<div className="stat-item">Score: {score}</div>
 				<div className="stat-item">Time: {timeLeft}s</div>
+				<div className="stat-item">Attempts: {attemptsLeft}</div>
+				<div className="stat-item">High Score: {highestScore}</div>
 			</div>
 
 			<div
@@ -314,20 +332,36 @@ export default function ObstacleGame() {
 					<div className="game-overlay">
 						<h2 className="game-title">
 							{gameOver
-								? timeLeft <= 0
+								? attemptsLeft <= 0
+									? "Game Over - No Attempts Left!"
+									: timeLeft <= 0
 									? "You Won!"
 									: "Game Over!"
-								: "Obstacle Avoidance"}
+								: "Rock Climbing"}
 						</h2>
 						{gameOver && (
-							<p className="game-score">Your final score: {score}</p>
+							<>
+								<p className="game-score">Your score: {score}</p>
+								<p className="game-score">Highest score: {highestScore}</p>
+								<p className="game-score">Attempts remaining: {attemptsLeft}</p>
+							</>
 						)}
-						<button className="game-button" onClick={startGame}>
-							{gameOver ? "Play Again" : "Start Game"}
+						<button
+							className="game-button"
+							onClick={startGame}
+							disabled={attemptsLeft <= 0}>
+							{gameOver
+								? attemptsLeft <= 0
+									? "No Attempts Left"
+									: "Try Again"
+								: "Start Game"}
 						</button>
 						<div className="game-instructions">
 							<p>Use left and right arrow keys to move</p>
 							<p>Avoid obstacles for 60 seconds to win!</p>
+							<p>
+								You have {attemptsLeft} attempts to achieve the highest score
+							</p>
 						</div>
 					</div>
 				)}
